@@ -4,13 +4,12 @@ module.exports = {
   isAuthenticated: (req, res, next) => {
     passport.authenticate("jwt", (err, user) => {
       if (err || !user) {
-        res.status(403).send({
+        return res.status(403).send({
           error: "you shall not pass",
         });
-      } else {
-        req.user = user;
-        next();
       }
+      req.user = user;
+      next();
     })(req, res, next);
   },
   signup: (req, res, next) => {
@@ -24,13 +23,6 @@ module.exports = {
       switch (error.details[0].context.key) {
         case "username":
           res.status(400).send({ error: "invalid email" });
-
-          break;
-        case "password":
-          res.status(400).send({
-            error:
-              "you must have at least a special char, number, capital letter, small letter and it should be between 8-32 charecters",
-          });
 
           break;
         default:
