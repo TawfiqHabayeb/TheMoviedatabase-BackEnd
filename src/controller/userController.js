@@ -42,7 +42,7 @@ module.exports = {
         userId: userId,
         movieId: movieId,
       });
-      console.log(userId, movieId, movie);
+
       if (movie) {
         return res.status(400).json({
           error: "Movie with same movieId already exists in watchlist.",
